@@ -1,4 +1,4 @@
-#include "histogram.hpp"
+#include "../lab03-histogram/histogram.hpp"
 
 #include <iostream>
 #include <vector>
