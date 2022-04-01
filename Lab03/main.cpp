@@ -20,6 +20,12 @@ int main() {
     cin >> number_count;
     cerr << "Enter numbers: ";
     const auto numbers = input_numbers(number_count);
+
+    if (number_count == 0 || numbers.size() != number_count) {
+        cerr << "Try again\n";
+        return 400;
+    }
+
     size_t bin_count;
     cerr << "Enter column count: ";
     cin >> bin_count;
