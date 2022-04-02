@@ -3,37 +3,50 @@
 void
 show_histogram_svg(const vector<size_t>& bins) {
     
-    const auto IMAGE_WIDTH = 400;
-    const auto IMAGE_HEIGHT = 300;
+    const auto IMAGE_WIDTH = 200;
+          auto IMAGE_HEIGHT = 360;
     const auto TEXT_LEFT = 20;
-    const auto TEXT_BASELINE = 20;
-    const auto TEXT_WIDTH = 50;
-    const auto BIN_HEIGHT = 30;
-    const auto BLOCK_WIDTH = 10;
-    const auto MAX_LENGTH_OF_BIN = 35;
+    const auto TEXT_HEIGHT = 20;
+    const auto TOP_ALIGN = 20;
+    const auto BLOCK_HEIGHT = 8;
+    const auto RECT_WIDTH = 20;
+    const auto MAX_LENGTH_OF_BIN = 40;
     
     size_t max_bin = bins[0];
-            for (size_t bin : bins ) {
-                if (bin > max_bin) {
-                    max_bin = bin;
-                }
+        for (size_t bin : bins ) {
+            if (bin > max_bin) {
+                max_bin = bin;
             }
+        }
     
-    double top = 0;
+    double left = TEXT_LEFT;
     const bool scaling_needed = max_bin > MAX_LENGTH_OF_BIN;
     const double scaling_factor = (double)MAX_LENGTH_OF_BIN / max_bin;
+    if (!scaling_needed)
+    {
+        IMAGE_HEIGHT = TEXT_HEIGHT + TOP_ALIGN + BLOCK_HEIGHT * max_bin;
+    }
+    const auto BIN_HEIGHT = IMAGE_HEIGHT - TEXT_HEIGHT + TOP_ALIGN;
+    const auto RECT_HEIGHT = BIN_HEIGHT - TEXT_HEIGHT;
     
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     
     for (size_t bin : bins) {
+        double scaling_width_factor = 1;
+        double bin_height = BLOCK_HEIGHT * bin;
         
-        double bin_width = BLOCK_WIDTH * bin;
         if (scaling_needed) {
-            bin_width *= scaling_factor;
+            bin_height *= scaling_factor;
+            if (bin >= 10) {
+                scaling_width_factor = 1.5;
+            }
+            if (bin >= 100) {
+                scaling_width_factor = 2;
+            }
         }
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-        top += BIN_HEIGHT;
+        svg_text(left + 6, BIN_HEIGHT, to_string(bin));
+        svg_rect(left, RECT_HEIGHT - bin_height, RECT_WIDTH * scaling_width_factor, bin_height);
+        left += RECT_WIDTH * scaling_width_factor;
     }
     svg_end();
 }
