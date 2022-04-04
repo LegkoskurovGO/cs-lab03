@@ -11,13 +11,18 @@ void show_histogram_text(vector<size_t> bins);
 
 int main() {
 
-    size_t number_count;
+    int number_count;
     cerr << "Enter number count: ";
     cin >> number_count;
+    if (number_count <= 0)
+    {
+        cerr << "Try again\n";
+        return 400;
+    }
     cerr << "Enter numbers: ";
     const auto numbers = input_numbers(number_count);
-
-    if (number_count == 0 || numbers.size() != number_count) {
+    if (numbers.size() != number_count)
+    {
         cerr << "Try again\n";
         return 400;
     }

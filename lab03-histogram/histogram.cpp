@@ -2,7 +2,7 @@
 
 void
 find_minmax(const vector<double>& numbers, double& min, double& max) {
-    if (numbers.size() == 0) {
+    if (numbers.size() <= 0) {
         return;
     }
     min = numbers[0];
