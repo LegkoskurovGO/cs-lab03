@@ -1,12 +1,12 @@
 #include "../lab03-histogram/histogram.hpp"
 #include "../lab03-svg/svgFunc.hpp"
+#include "../lab03-input/inputing.hpp"
 
 #include <iostream>
 #include <vector>
 using namespace std;
 
-vector<double> input_numbers(size_t count);
-vector<size_t> make_histogram(size_t bin_count, const vector<double>& numbers, double min, double max);
+vector<size_t> make_histogram(size_t bin_count, const vector<double>& numbers);
 void show_histogram_text(vector<size_t> bins);
 
 int main() {
@@ -31,10 +31,7 @@ int main() {
     cerr << "Enter column count: ";
     cin >> bin_count;
 
-    double min, max;
-    find_minmax(numbers, min, max);
-
-    auto bins = make_histogram(bin_count, numbers, min, max);
+    auto bins = make_histogram(bin_count, numbers);
     
     //show_histogram_text(bins);
     
@@ -43,16 +40,10 @@ int main() {
     return 0;
 }
 
-vector<double>
-input_numbers(size_t count) {
-    vector<double> result(count);
-    for (size_t i = 0; i < count; i++) {
-        cin >> result[i];
-    }
-    return result;
-}
 vector<size_t>
-make_histogram(size_t bin_count, const vector<double>& numbers, double min, double max) {
+make_histogram(size_t bin_count, const vector<double>& numbers) {
+    double min, max;
+    find_minmax(numbers, min, max);
     vector<size_t> bins(bin_count);
     for (double number : numbers) {
         size_t bin = (size_t)((number - min) / (max - min) * bin_count);

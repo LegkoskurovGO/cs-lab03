@@ -1,11 +1,5 @@
-/.DS_Store
 /DerivedData/
-/Lab03.xcodeproj/project.xcworkspace/
-/Lab03.xcodeproj/xcuserdata/
+*project.xcworkspace/
+*xcuserdata/
 /Build
-/Lab03/.DS_Store
-/lab03-histogram/.DS_Store
-/lab03-histogram/lab03-histogram/.DS_Store
-lab03-histogram/lab03-histogram/.DS_Store
-/lab03-histogram/lab03-histogram/lab03-histogram.xcodeproj/xcuserdata/
-/lab03-histogram/lab03-histogram/lab03-histogram.xcodeproj/project.xcworkspace/
+*.DS_Store
