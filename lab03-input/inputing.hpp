@@ -7,7 +7,6 @@
 #include <sstream>
 using namespace std;
 
-vector<double> input_numbers(size_t count, istream& stream);
-vector<double> input_numbers(size_t count);
+vector<double> input_numbers(size_t count, istream& stream = cin);
 
 #endif /* inputing_hpp */
