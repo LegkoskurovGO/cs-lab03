@@ -2,30 +2,115 @@
 
 #include <cassert>
 #include <iostream>
-#include <ios>
+#include <sstream>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 void
-test_first() {
-    string input;
-    getline(cin, input);
-    stringstream source(input);
+triplePositive() {
+    stringstream stream("1 1 2");
+    double str;
     
+    size_t number_count = 3;
     
-    string s("123.45");
-    double amt;
-    istringstream myString(s);
-    myString >> amt;
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        assert(numbers[i] == str);
+    }
+}
 
+void
+tripleNegative() {
+    stringstream stream("-1 -10 -2");
+    double str;
+    
+    size_t number_count = 3;
+    
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        //cout << "numbers is " << numbers[i] << "\tand str is " << str << endl;
+        assert(numbers[i] == str);
+    }
+}
+void
+tripleOne() {
+    stringstream stream("1 1 1");
+    double str;
+    
+    size_t number_count = 3;
+    
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        //cout << "numbers is " << numbers[i] << "\tand str is " << str << endl;
+        assert(numbers[i] == str);
+    }
+}
+void
+onlyZeroes() {
+    stringstream stream("0 0 0 0");
+    double str;
+    
+    size_t number_count = 4;
+    
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        //cout << "numbers is " << numbers[i] << "\tand str is " << str << endl;
+        assert(numbers[i] == str);
+    }
+}
+void
+empty() {
+    stringstream stream("");
+    double str;
+    
+    size_t number_count = 0;
+    
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        //cout << "numbers is " << numbers[i] << "\tand str is " << str << endl;
+        assert(numbers[i] == str);
+    }
+}
+void
+quadroDifferent() {
+    stringstream stream("1 -2 3 -4");
+    double str;
+    
+    size_t number_count = 4;
+    
+    auto numbers = input_numbers(number_count, stream);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        //cout << "numbers is " << numbers[i] << "\tand str is " << str << endl;
+        assert(numbers[i] == str);
+    }
 }
 
 int
 main() {
-    test_first();
-    
+    triplePositive();
+    tripleNegative();
+    tripleOne();
+    onlyZeroes();
+    empty();
+    quadroDifferent();
 }
-
-// int number_count;
-// cerr << "Enter number count: ";
-// cerr << "Enter numbers: ";
-// const auto numbers = input_numbers(number_count);
