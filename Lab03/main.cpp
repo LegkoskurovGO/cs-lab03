@@ -20,7 +20,7 @@ int main() {
         return 400;
     }
     cerr << "Enter numbers: ";
-    const auto numbers = input_numbers(number_count);
+    const auto numbers = input_numbers(number_count, cin);
     if (numbers.size() != number_count)
     {
         cerr << "Try again\n";

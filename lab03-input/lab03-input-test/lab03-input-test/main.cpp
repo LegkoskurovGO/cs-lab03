@@ -105,6 +105,22 @@ quadroDifferent() {
     }
 }
 
+void
+cinfunc() {
+    stringstream stream("1 1 2");
+    double str;
+    
+    size_t number_count = 3;
+    
+    cout << "Enter numbers: ";
+    auto numbers = input_numbers(number_count, cin);
+    
+    stream.seekg(ios_base::beg);
+    for (size_t i = 0; i < number_count; i++) {
+        stream >> str;
+        assert(numbers[i] == str);
+    }
+}
 int
 main() {
     triplePositive();
@@ -113,4 +129,5 @@ main() {
     onlyZeroes();
     empty();
     quadroDifferent();
+    //cinfunc();
 }
