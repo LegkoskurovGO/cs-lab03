@@ -11,34 +11,30 @@ vector<size_t> make_histogram(struct Input name);
 void show_histogram_text(vector<size_t> bins);
 
 Input
-read_input(istream& in) {
-    
+read_input(istream& in, bool prompt) {
+   
     Input data;
 
-    cerr << "Enter number count: ";
+    if (prompt) {cerr << "Enter number count: ";}
     size_t number_count;
     in >> number_count;
 
-    cerr << "Enter numbers: ";
+    if (prompt) {cerr << "Enter numbers: ";}
     data.numbers = input_numbers(number_count, in);
     
-    cerr << "Enter column count: ";
+    if (prompt) {cerr << "Enter column count: ";}
     cin >> data.bin_count;
 
     return data;
 }
 
 int main() {
-    Input results;
     
-    results = read_input(cin);
-    
-    auto bins = make_histogram(results);
+    const auto input = read_input(cin, true);
+    const auto bins = make_histogram(input);
+    show_histogram_svg(bins);
     
     //show_histogram_text(bins);
-    
-    show_histogram_svg(bins);
-
     return 0;
 }
 
