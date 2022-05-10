@@ -10,29 +10,35 @@ vector<double> input_numbers(size_t count, istream& in = cin);
 vector<size_t> make_histogram(size_t bin_count, const vector<double>& numbers);
 void show_histogram_text(vector<size_t> bins);
 
-int main() {
-
-    int number_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-    if (number_count <= 0)
-    {
-        cerr << "Try again\n";
-        return 400;
-    }
-    cerr << "Enter numbers: ";
-    const auto numbers = input_numbers(number_count);
-    if (numbers.size() != number_count)
-    {
-        cerr << "Try again\n";
-        return 400;
-    }
-
+struct Input {
+    vector<double> numbers;
     size_t bin_count;
-    cerr << "Enter column count: ";
-    cin >> bin_count;
+};
 
-    auto bins = make_histogram(bin_count, numbers);
+Input
+read_input(istream& in) {
+    
+    Input data;
+
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(number_count, in);
+    
+    cerr << "Enter column count: ";
+    cin >> data.bin_count;
+
+    return data;
+}
+
+int main() {
+    Input results;
+    
+    results = read_input(cin);
+    
+    auto bins = make_histogram(results.bin_count, results.numbers);
     
     //show_histogram_text(bins);
     
