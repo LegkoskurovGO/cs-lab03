@@ -1,5 +1,7 @@
 #include "svgFunc.hpp"
 
+extern string stroke;
+
 void
 show_histogram_svg(const vector<size_t>& bins) {
     
@@ -45,7 +47,7 @@ show_histogram_svg(const vector<size_t>& bins) {
             }
         }
         svg_text(left + 6, BIN_HEIGHT, to_string(bin));
-        svg_rect(left, RECT_HEIGHT - bin_height, RECT_WIDTH * scaling_width_factor, bin_height);
+        svg_rect(left, RECT_HEIGHT - bin_height, RECT_WIDTH * scaling_width_factor, bin_height, stroke);
         left += RECT_WIDTH * scaling_width_factor;
     }
     svg_end();

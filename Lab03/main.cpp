@@ -16,17 +16,36 @@ void show_histogram_text(vector<size_t> bins);
 Input read_input(istream& in, bool prompt);
 Input download(const string& address);
 size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx);
+string sort_through_argv(int argc, char* argv[], int& url, bool& existStroke);
+
+extern string stroke = "#EECCC1";
 
 int
 main (int argc, char* argv[]) {
     
+    int url;
+    bool fault;
     Input input;
-    if (argc > 1) {
-        input = download(argv[1]);
-    } else {
-        input = read_input(cin, true);
+    switch (argc) {
+        case 1:
+            input = read_input(cin, true);
+            break;
+        case 2:
+            input = download(argv[1]);
+            break;
+        case 4:
+            stroke = sort_through_argv(argc, argv, url, fault);
+            if (fault) {
+                cout << "В следующий раз после -stroke укажите любой цвет" << endl;
+                return 1;
+            }
+            input = download(argv[url]);
+            break;
+        default:
+            cerr << "Параметры введены неверно" << endl;
+            return 2;
+            break;
     }
-
     const auto bins = make_histogram(input);
     show_histogram_svg(bins);
 
@@ -34,6 +53,24 @@ main (int argc, char* argv[]) {
     return 0;
 }
 
+string
+sort_through_argv(int argc, char* argv[], int& url, bool& existStroke) {
+    string result;
+    existStroke = true;
+    for (int i = 1; i < argc; i++) {
+        bool flag = strstr(argv[i] ,"http") != NULL || strstr(argv[i] ,"://") != NULL;
+        if (strstr(argv[i] ,"-stroke") != NULL) {
+            if ( i+1 != argc) {
+                result = argv[i+1];
+                existStroke = false;
+            }
+        }
+        else if (flag) {
+            url = i;
+        }
+    }
+    return result;
+}
 Input
 read_input(istream& in, bool prompt) {
    
