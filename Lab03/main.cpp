@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <curl/curl.h>
 using namespace std;
 
 vector<double> input_numbers(size_t count, istream& in = cin);
@@ -29,6 +30,8 @@ read_input(istream& in, bool prompt) {
 }
 
 int main() {
+    
+    curl_global_init(CURL_GLOBAL_ALL);
     
     const auto input = read_input(cin, true);
     const auto bins = make_histogram(input);

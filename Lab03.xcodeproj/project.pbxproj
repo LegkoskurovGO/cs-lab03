@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A351F073283125B8003D41A7 /* libcurl.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A351F071283125B8003D41A7 /* libcurl.4.dylib */; };
+		A351F074283125B8003D41A7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A351F072283125B8003D41A7 /* libcurl.a */; };
 		A3BC941E27E83F36004876D1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BC941D27E83F36004876D1 /* main.cpp */; };
 		A3BC947027F18F6B004876D1 /* histogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BC946E27F18F6B004876D1 /* histogram.cpp */; };
 		A3BC94B527F7A9C7004876D1 /* svgFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BC94B327F7A9C7004876D1 /* svgFunc.cpp */; };
@@ -25,6 +27,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A351F07028312598003D41A7 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = curl.h; path = ../../../../../../../../opt/homebrew/Cellar/curl/7.83.1/include/curl/curl.h; sourceTree = "<group>"; };
+		A351F071283125B8003D41A7 /* libcurl.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.4.dylib; path = ../../../../../../../../opt/homebrew/Cellar/curl/7.83.1/lib/libcurl.4.dylib; sourceTree = "<group>"; };
+		A351F072283125B8003D41A7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../../../../../../opt/homebrew/Cellar/curl/7.83.1/lib/libcurl.a; sourceTree = "<group>"; };
 		A3BC941A27E83F36004876D1 /* Lab03 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lab03; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3BC941D27E83F36004876D1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A3BC942427E84CCA004876D1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
@@ -39,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A351F073283125B8003D41A7 /* libcurl.4.dylib in Frameworks */,
+				A351F074283125B8003D41A7 /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,9 @@
 			isa = PBXGroup;
 			children = (
 				A3BC941D27E83F36004876D1 /* main.cpp */,
+				A351F071283125B8003D41A7 /* libcurl.4.dylib */,
+				A351F072283125B8003D41A7 /* libcurl.a */,
+				A351F07028312598003D41A7 /* curl.h */,
 				A3BC94B327F7A9C7004876D1 /* svgFunc.cpp */,
 				A3BC94B427F7A9C7004876D1 /* svgFunc.hpp */,
 				A3BC946E27F18F6B004876D1 /* histogram.cpp */,
@@ -253,6 +263,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/Cellar/curl/7.83.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -261,6 +275,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/homebrew/Cellar/curl/7.83.1/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
