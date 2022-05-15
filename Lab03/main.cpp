@@ -4,12 +4,35 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <string>
+#include <stdlib.h>
+#include <stdio.h>
 #include <curl/curl.h>
 using namespace std;
 
 vector<double> input_numbers(size_t count, istream& in = cin);
 vector<size_t> make_histogram(struct Input name);
 void show_histogram_text(vector<size_t> bins);
+Input read_input(istream& in, bool prompt);
+Input download(const string& address);
+size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx);
+
+int
+main (int argc, char* argv[]) {
+    
+    Input input;
+    if (argc > 1) {
+        input = download(argv[1]);
+    } else {
+        input = read_input(cin, true);
+    }
+
+    const auto bins = make_histogram(input);
+    show_histogram_svg(bins);
+
+    //show_histogram_text(bins);
+    return 0;
+}
 
 Input
 read_input(istream& in, bool prompt) {
@@ -24,44 +47,43 @@ read_input(istream& in, bool prompt) {
     data.numbers = input_numbers(number_count, in);
     
     if (prompt) {cerr << "Enter column count: ";}
-    cin >> data.bin_count;
+    in >> data.bin_count;
 
     return data;
 }
+Input
+download(const string& address) {
+    stringstream buffer;
 
-int
-main (int argc, char* argv[]) {
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURL* curl = curl_easy_init();
     
-    if (argc > 1) {
-        curl_global_init(CURL_GLOBAL_ALL);
-        CURL* curl = curl_easy_init();
+    if(curl) {
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&buffer);
+        res = curl_easy_perform(curl);
         
-        if(curl) {
-          CURLcode res;
-          curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
-          res = curl_easy_perform(curl);
-            
-            if(res != CURLE_OK) {
-                fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                        curl_easy_strerror(res));
-                curl_easy_cleanup(curl);
-                exit(1);
-            }
-            
-          curl_easy_cleanup(curl);
+        if(res != CURLE_OK) {
+            fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                    curl_easy_strerror(res));
+            curl_easy_cleanup(curl);
+            exit(1);
         }
         
-        return 0;
+      curl_easy_cleanup(curl);
     }
-    
-    const auto input = read_input(cin, true);
-    const auto bins = make_histogram(input);
-    show_histogram_svg(bins);
-    
-    //show_histogram_text(bins);
-    return 0;
+    return read_input(buffer, false);
 }
-
+size_t
+write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    size_t data_size = item_size * item_count;
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    char* itemsChar = reinterpret_cast<char*>(items);
+    buffer->write(itemsChar, data_size);
+    return data_size;
+}
 vector<double>
 input_numbers(size_t count, istream& in) {
     vector<double> result(count);
